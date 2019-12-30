@@ -1,1 +1,19 @@
-\00_todo
+*.pyc
+*.db
+*.sqlite3
+*.mdb  
+*.ldb  
+*.sln  
+*.config  
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+#过滤文件夹Debug,Release,obj  
+Debug/  
+Release/  
+obj/ 
+
+00_todo/
