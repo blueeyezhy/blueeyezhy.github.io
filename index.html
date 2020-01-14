@@ -1,47 +1,41 @@
-<!DOCTYPE html>
-    <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Wolcome!</title>
-        
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
-        
-        <style>
-.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
-</style>
-        <style>
-            body {
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
-                font-size: 14px;
-                line-height: 1.6;
-            }
-        </style>
-        
-        
-    </head>
-    <body class="vscode-light">
-        <h1 id="wolcome">Wolcome!</h1>
-<p>This is Harry Zhang, a life-long learner.</p>
-<hr>
-<h2 id="my-first-desktop-program">My first desktop program.</h2>
-<p>I have created my first desktop program, it's a <a href="https://github.com/blueeyezhy/blueeyezhy.github.io/tree/master/projects"><strong><code>calculator</code></strong></a> and upload it here, so does the <a href="https://gist.github.com/blueeyezhy/ecfa0dce35bdaa49dfffbcb8b940135d"><strong><code>calculator.py</code></strong></a> file.</p>
-<p>Please feel free to inform me about this little tool.
-I will be very very glad.</p>
-<hr>
-<h2 id="my-learning-summary">My learning summary.</h2>
-<p><a href="https://press.one/files/8f3846123c2b2879565703800a37b7f60dd19e3ff7821c65c3d43adb5dfb9bca">Python summary-10 -- Protocol-2</a><br>
-<a href="https://press.one/files/3bbc71a8a923a30f72c4b2b710aef6a081378f05aa21c2901ab3ea73b5eddffb">Python summary-9 -- Protocol-1</a><br>
-<a href="https://press.one/files/e4299a7e8a87f873f9be077eadee69c67c71c4aebb11ae756ecad67ad9505e14">Python summary-8 -- Github 1to2</a><br>
-<a href="https://press.one/files/13a170be8a91a67f2b40678962b8195f7ee6b832981fdd2f4fb547fc95b13351">Python summary-7 -- Encryption and decryption-RSA</a><br>
-<a href="https://press.one/files/47660cce5e8fcd99f98ca20810a1f19a6bc3c6544a690630c344ee7af3ddbcf3">Python summary-6 -- Encryption and decryption-DES</a><br>
-<a href="https://press.one/files/9ecb935fb12fc91a54c947a91088033981481948143d41d472f2327834062442">Python summary-5 -- Encryption and decryption-1</a><br>
-<a href="https://press.one/files/d5e0b45c6e7856b4d6e1cea6f8e5272c4fbe77db65d565e618b2867c7d9b0d0a">Python summary-4 -- String parsing</a><br>
-<a href="https://press.one/files/b144e92ec716bf268ca4eb1124a78a11d12fa19f8b2f627e452843c37366d472">Python summary-3 -- PyQt5</a><br>
-<a href="https://press.one/files/322f2647c0bb7f85f214c109a35bd3ce744b6710083e64e1b38e19de107076e5">Python summary-2 -- PowerShell</a><br>
-<a href="https://press.one/files/4c7f8014a7c4d8a3bdeb04207171c096b59d27765458429129bd07a060dee68a">Python summary-1</a></p>
-<hr>
-<p><a href="https://press.one/p/v?s=6ad6904f049eb87bd922e0f227b4c7d1cb23b3f007cae923e3f28cfd06948b37431a7d6c2235a5ed5da743162a47802bf7da163d904ebe949f3d2e63d299f6dd01&amp;h=7024eeac5b6eb0db1886f5fb4e63ae6bcbc10816e4e8e5bce4e297584fe2f112&amp;a=7c08521960497a61baf3f1c9760ff2a4cc66be1c&amp;f=P1&amp;v=3">My PressOne Signature</a></p>
+<!doctype html>
+<html lang="en">
 
-    </body>
-    </html>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.7.0/marked.min.js"></script>
+    <title>default</title>
+
+  </head>
+  <body style="background-image: url(src/img/bg.png);">
+  	<header class="container bg-primary"></header>
+	<div class="container" style="margin-top:20px">
+	  <div class="row">
+	  	<div class="col-sm-3">
+	  	  <img class="img-fluid" style="border-radius:30px;box-shadow:0px 0px 8px 5px #ccc;" src="src/img/me.jpg" alt="my picture">
+	  	</div>
+		<div class="col-sm-9" id="md-content"></div>
+	  </div>	  
+	</div>
+	<footer class="container bg-dark text-white"></footer>
+
+    <script>
+        fetch(data="post/total.md")
+        .then((resp) => resp.text())
+        .then(function(data) {
+            document.getElementById('md-content').innerHTML = marked(data)
+        })
+    </script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  </body>
+</html>

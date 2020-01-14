@@ -10,6 +10,8 @@
 __pycache__/
 *.py[cod]
 *$py.class
+.env
+venv/
 
 #过滤文件夹Debug,Release,obj  
 Debug/  
@@ -17,3 +19,6 @@ Release/
 obj/ 
 
 00_todo/
+
+
+
