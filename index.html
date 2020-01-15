@@ -5,24 +5,47 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.7.0/marked.min.js"></script>
-    <title>default</title>
-
+    <title>Harry Zhang</title>
   </head>
+
   <body style="background-image: url(src/img/bg.png);">
   	<header class="container bg-primary"></header>
-	<div class="container" style="margin-top:20px">
-	  <div class="row">
-	  	<div class="col-sm-3">
-	  	  <img class="img-fluid" style="border-radius:30px;box-shadow:0px 0px 8px 5px #ccc;" src="src/img/me.jpg" alt="my picture">
-	  	</div>
-		<div class="col-sm-9" id="md-content"></div>
-	  </div>	  
-	</div>
-	<footer class="container bg-dark text-white"></footer>
+
+  	<div class="container">
+  	  <div class="row">
+  	  	<div class="col-md-3"  style="margin-top:20px">
+
+          <div class="row align-items-center">
+            <div class="col-md-12 col-5 mx-auto row justify-content-md-center">
+              <img class="img-fluid" style="border-radius:15px;box-shadow:0px 0px 8px 5px #ccc;width:120px;height: 120px" src="src/img/me.jpg" alt="my picture">
+            </div>
+
+            <div class="col-md-12 col-7" style="margin-top:10px">
+              <a href="http://blueeye.run/">
+                <h5 class="text-center" >Harry Zhang <br>
+                  <small class="text-muted text-center">A life-long learner</small>
+                </h5>
+              </a>
+              <div>
+                <nav class="nav justify-content-center">
+                  <a class="nav-link w-10" style="width:50px;" href="https://github.com/blueeyezhy"><img class="img-fluid" src="src/img/Git-256.png"  alt="git"></a>
+                  <a class="nav-link w-10" style="width:50px;" href="mailto:blueeye_zhy@outlook.com"><img class="img-fluid" src="src/img/Mail-256.png" alt="mail"></a>
+                  <a class="nav-link w-10" style="width:50px;" href="#"><img class="img-fluid" src="src/img/RSS-256.png" alt="RSS"></a>
+                </nav>                
+              </div>
+            </div>
+          </div>
+
+  	  	</div>
+  		<div class="col-md-9 bg-light" id="md-content" style="box-shadow:0px 0px 8px 5px #ccc; margin-top:20px;">
+        
+      </div>
+  	  </div>	  
+  	</div>
+  	<footer class="container bg-dark text-white"></footer>
 
     <script>
         fetch(data="post/total.md")
