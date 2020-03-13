@@ -7,7 +7,7 @@
 要掌握下列知识领域的基本操作： **服务器与域名基本知识，Linux系统操作，ssh服务，TLS&CA，git，nginx，docker和docker-compose，数据库**
 
 **<飞贴站架构图>**
-![seakyclub](http://src.seaky.club/seakyclub.png)
+![seakyclub](https://static.press.one/73/8e/738ec26af0d8069a1320beb4a64ad358f9af968415cd5064c43fd17cbe119992.png)
 
 **<请求响应流程>**
 > 1. 用户通过浏览器输入域名
@@ -39,7 +39,7 @@
 1. 购买自己喜欢的域名，域名供应商也很多。我选的是[阿里](https://wanwang.aliyun.com/domain/)。
 2. 选择DNS服务器(默认hichina)，也可以选择其他国外服务器，如fcloud
 3. 添加解析记录，记录值为服务器的公网IP，[阿里教程](https://help.aliyun.com/document_detail/106669.html?spm=a2c4g.11186623.6.560.422669a0bgL99G)
-   1. 一级域名：@，
+   1. 一级域名：@
    2. 二级域名：www，reader，pub   
 4. 服务器在中国的需要，通过工信部的ICP备案，才可以通过域名访问。页面会有提示以及申请链接，填写资料提交申请，我用个人空间的名义申请的2天获得备案号。
 5. 然后就可以通过域名访问到自己的服务器了。解析到国外服务器的域名不需要ICP备案。
@@ -48,13 +48,17 @@
 1. 本地主机需要安装远程登录工具，按照教程[使用SSH密钥对连接Linux实例](https://help.aliyun.com/document_detail/51798.html)配置ssh密钥建立链接。远程控制服务器主机的工具比较多，如 putty(上面链接有下载)，[Xshell](https://www.netsarang.com/zh/xshell/)，[SecureCRT](https://www.vandyke.com/products/securecrt/)都可以；另外也可以通过Linux系统直接远程访问服务器，命令如下：   
    `ssh -i ~/.ssh/seaky.pem root@47.103.71.170`；  
    其中 `~/.ssh/seaky.pem` = 从阿里云下载的私钥、`root@47.103.71.170` = 用户名@外网ip。  
-   还有一个文件传输的工具[WinSCP](https://winscp.net/eng/download.php)，远程传输文件很好用。   
+   还有一个文件传输的工具[WinSCP](https://winscp.net/eng/download.php)，远程传输文件很好用。     
+
+
    关于私钥和公钥的相关知识大家可以自行去搜索，我自己对于加密与解密也做过一些总结：
-   [加密与解密1](https://reader.seaky.club/posts/834d1552074d5ded877a22a2c2a2ab60cf5b4e5d0951154f75773915ec0c43ae)，[对称加密(DES)](https://reader.seaky.club/posts/667a66907ecc7d28572fe66bf3a8da9723b72a4714d425087a6c7df40ae4725b)，[非对称加密(RSA)](https://reader.seaky.club/posts/71bbf6bd85beb9e08da2c65e66ba0001a9d990c747afa376d065a78bcb922275)
-   核心过程是：
-   **a.** 服务器默认路径下保存公钥；
-   **b.** 本地主机远程工具利用本地保存的私钥(阿里云下载的私钥)将通讯内容进行签名(加密)，然后通过ssh服务传输到服务器22端口；
-   **c.** 服务器的ssh服务监听22端口，接收到的信息，利用其保存的公钥认证签名信息(解密)，校验用户和信息完整性；
+   [加密与解密1](https://reader.seaky.club/posts/834d1552074d5ded877a22a2c2a2ab60cf5b4e5d0951154f75773915ec0c43ae)，[对称加密(DES)](https://reader.seaky.club/posts/667a66907ecc7d28572fe66bf3a8da9723b72a4714d425087a6c7df40ae4725b)，[非对称加密(RSA)](https://reader.seaky.club/posts/71bbf6bd85beb9e08da2c65e66ba0001a9d990c747afa376d065a78bcb922275)    
+
+
+   核心过程是：  
+   **a.** 服务器在默认路径下保存公钥；   
+   **b.** 本地主机远程工具利用本地保存的私钥(阿里云下载的私钥)将通讯内容进行签名(加密)，然后通过ssh服务传输到服务器22端口；    
+   **c.** 服务器的ssh服务监听22端口，接收到的信息后，利用其保存的公钥验证签名信息(解密)，校验用户和信息完整性；    
    **d.** 然后根据验证信息内容，将验证信息转发给对应的服务或操作系统指令集
 
 2. 使用上述工具登录远程服务器，创建普通权限用户，避免远程使用root用户造成误操作
@@ -76,7 +80,7 @@
    在远程登录工具上使用 `www` 用户登录服务器，测试新用户的远程登录。
    不要禁止远程root登录，因为后续执行飞贴的docker-compose命令时需要用root用户。
 
-4. 远程登录服务器，确认网络配置是否支持ipv6通讯功能。因为飞贴的服务是通过docker-compose创建的容器组实现的，而容器之间是通过TCP6协议进行通讯的，所以主网卡的配置需要支持ipv6，以支持TCP6协议通讯。   
+4. 远程登录服务器，确认网络配置是否支持ipv6通讯功能。因为飞贴的服务是通过docker-compose创建的容器组实现的，而容器之间是通过TCP6协议进行通讯的，所以主网卡的配置需要支持ipv6，以支持TCP6协议的通讯。   
    执行 `ifconfig` 或 `nmcli` 查看当前网络配置：
    ```powershell
    $ sudo nmcli
@@ -99,7 +103,8 @@
    ```
    重新链接远程服务器实例并执行：
    ```powershell
-   $ sudo vim /etc/modprobe.d/disable_ipv6.conf # 将 options ipv6 disable=1 修改为 =0
+   $ sudo vim /etc/modprobe.d/disable_ipv6.conf 
+      options ipv6 disable = 0                     # 修改为 0
    $ sudo vim /etc/sysctl.conf
       net.ipv6.conf.all.disable_ipv6 = 0           # 修改为 0
       net.ipv6.conf.default.disable_ipv6 = 0       # 修改为 0
@@ -165,8 +170,8 @@
    说明：  
    **a**.防火墙的意义和重点是设定允许访问与接入  
    **b**.启用防火墙配置前，一定要确保22/tcp端口是永久开放的，否则远程访问将被禁止  
-   **c**.容器和系统公用一个网卡资源，通过命名空间隔离，但是网卡硬件设置不开放6379和5432端口的话，飞贴容器就访问不到数据库   
-   **d**.因为云主机的入站规则，仅开放了80和443端口，所有外部无法访问到6379和5432端口，可以保证数据库安全
+   **c**.容器和系统公用一个网卡资源，通过命名空间隔离，如果网卡硬件设置不开放6379和5432端口的话，飞贴容器就访问不到数据库   
+   **d**.因为云主机的入站规则仅开放了80和443端口，所有外部无法访问到6379和5432端口，可以保证数据库安全
 
 6. 系统升级安装包 
    ```powershell
@@ -202,7 +207,7 @@
    参看 [mixinDeveloper](https://developers.mixin.one/guides)，生成应用mixin app的密钥`Secret`，下载`Session`获取`PIN`，`Session ID`，`PinToken`，`私钥`，session文件请妥善保管。   
    启动完成后，执行 `crul http://localhost:8000`，`crul http://localhost:9000` 确认返回发布站和阅读站的html首页。
 
-1. 安装nginx
+1. 安装nginx    
    ```powershell
    $ sudo yum install nginx -y   # 安装nginx
    $ nginx -v                    # 确认版本
@@ -231,7 +236,8 @@
    $ sudo firewall-cmd --reload
    ```
 
-2. 配置静态首页及反向代理reader和pub容器，nginx是轻量级高并发服务器程序。配置项目很多，可以参考[nginx通用配置](https://www.digitalocean.com/community/tools/nginx)做通用配置，然后根据自身情况修改。
+2. 配置静态首页及反向代理reader和pub容器    
+   nginx是轻量级高并发服务器程序，配置项目很多，可以参考[nginx通用配置](https://www.digitalocean.com/community/tools/nginx)做通用配置，然后根据自身情况修改。   
    下面是seaky.club的配置：
    ```powershell
    upstream upstream-seaky-pub {
@@ -308,8 +314,62 @@
          }
    }
    ```
+   配置完成后，执行：
+   ```powershell
+   $ sudo nginx -t                  # nginx配置语法检测
+   $ sudo systemctl reload nginx    # 生效新配置
+   $ sudo systemctl status nginx    # 确认nginx状态
+   ```
 
-2. 导入的其他配置内容 general & security & proxy   
+3. 其他配置内容  nginx & general & security & proxy   
+   `/etc/nginx/nginx.conf;` nginx主配置    
+   ```powershell
+   user nginx;
+   pid /run/nginx.pid;
+   worker_processes auto;
+   worker_rlimit_nofile 65535;
+
+   events {
+         use epoll;
+         multi_accept on;
+         worker_connections 65535;
+   }
+
+   http {
+         charset utf-8;
+         sendfile on;
+         tcp_nopush on;
+         tcp_nodelay on;
+         log_not_found off;
+         keepalive_timeout 65;
+         types_hash_max_size 2048;
+         client_max_body_size 100M;
+         server_names_hash_bucket_size 64;
+
+         proxy_hide_header X-Powered-By;
+         proxy_hide_header Server;
+
+         # MIME
+         include  /etc/nginx/mime.types;
+         default_type application/octet-stream;
+
+         # logging
+         access_log      /var/log/nginx/access.log;
+         error_log       /var/log/nginx/error.log error;
+
+         # limits
+         limit_req_log_level warn;
+         limit_req_zone $binary_remote_addr zone=login:10m rate=10r/m;
+
+         # SSL
+         include         /etc/nginx/nginxconfig.io/ssl.conf;
+
+         # load configs
+         include         /etc/nginx/conf.d/*.conf;
+         include         /etc/nginx/sites-available/*.conf;
+   }
+
+   ```
    `/etc/nginx/nginxconfig.io/general.conf;` 压缩相关配置
    ```powershell
    # gzip 
@@ -362,30 +422,30 @@
    ```
 
 
-1. https配置(选择Let's Encrypt作为认证平台，用certbot实现认证过程)    
-   TLS协议&CA证书，简要实现过程如下图：过程是通过[非对称加密](https://reader.seaky.club/posts/71bbf6bd85beb9e08da2c65e66ba0001a9d990c747afa376d065a78bcb922275)实现的。  
+4. https配置（选择Let's Encrypt作为认证平台，用certbot实现认证过程）    
+   https安全链接是通过TLS协议和CA证书来实现的，简要实现过程如下图：过程核心是[非对称加密](https://reader.seaky.club/posts/71bbf6bd85beb9e08da2c65e66ba0001a9d990c747afa376d065a78bcb922275)。  
 
-   ![TLS&CA](http://src.seaky.club/CA.png)
+   ![TLS&CA](https://static.press.one/42/34/423420f2bee4bcb5441c274a0165479944b065e2933425ef621e9a3936436460.png)
 
 
    `/etc/nginx/nginxconfig.io/ssl.conf;` ssl配置TLS认证相关
    ```powershell
    #ssl
-   ssl_certificate /etc/letsencrypt/live/seaky.club/fullchain.pem;
-   ssl_certificate_key /etc/letsencrypt/live/seaky.club/privkey.pem;
-   ssl_trusted_certificate /etc/letsencrypt/live/seaky.club/chain.pem;
+   ssl_certificate /etc/letsencrypt/live/seaky.club/fullchain.pem;      # 包含认证机构的CA证书
+   ssl_certificate_key /etc/letsencrypt/live/seaky.club/privkey.pem;    # 服务器TLS私钥
+   ssl_trusted_certificate /etc/letsencrypt/live/seaky.club/chain.pem;  # CA证书
    ssl_session_timeout 1d;
    ssl_session_cache shared:SSL:50m;
    ssl_session_tickets off;
 
    # Diffie-Hellman parameter for DHE ciphersuites
-   ssl_dhparam /etc/ssl/certs/dhparam.pem;
+   ssl_dhparam /etc/ssl/certs/dhparam.pem;   # DHE安全增强
 
    ssl_protocols TLSv1.2 TLSv1.3;
    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
    ssl_prefer_server_ciphers on;
 
-   # OCSP Stapling
+   # OCSP Stapling     
    ssl_stapling on;
    ssl_stapling_verify on;
    resolver 1.1.1.1 1.0.0.1 8.8.8.8 8.8.4.4 208.67.222.222 208.67.220.220 valid=600s;
@@ -394,7 +454,7 @@
    fastcgi_param   HTTPS                   on;
    fastcgi_param   HTTP_SCHEME             https;
    ```
-   `/etc/nginx/nginxconfig.io/letsencrypt.conf;` 
+   `/etc/nginx/nginxconfig.io/letsencrypt.conf;` 本地验证信息路径，只要是本地文件就行
    ```
    # ACME-challenge
    location ^~ /.well-known/acme-challenge/ {
@@ -405,23 +465,46 @@
          return 404;
    }
    ```
-   根据[certbot官方文档](https://certbot.eff.org/lets-encrypt/centosrhel8-nginx)，生成域名证书，我是一套证书认证了4个域名。      
-   [开启DHE ciphersuites和OCSP服务](https://raymii.org/s/tutorials/Strong_SSL_Security_On_nginx.html)加固。
+   根据[certbot官方文档](https://certbot.eff.org/lets-encrypt/centosrhel8-nginx)，根据向导生成域名证书，我是一套证书认证4个域名。也可以应用通配符的CA认证，可以1套证书认证多个域名。[开启DHE ciphersuites和OCSP服务](https://raymii.org/s/tutorials/Strong_SSL_Security_On_nginx.html)安全加固。
 
-### 飞贴自定义，mixin，
-1. mixin
-2. config
+### 飞贴站自定义及MixinApp配置      
+1. MixinApp配置     
+   进入[MixinDeveloper]https://developers.mixin.one，选择与飞贴站绑定的两个app，配置url。     
+   名称： seaky_reader     
+   首页网址： https://reader.seaky.club     
+   验证网址： https://reader.seaky.club/api/auth/mixin/callback    
 
-### 本地配置虚拟机
+   名称： seaky_pub     
+   首页网址： https://pub.seaky.club     
+   验证网址： https://pub.seaky.club/api/auth/mixin/callback 
+
+2. 飞贴站自定义 （注意修改内容，避免错误）    
+   远程链接进入服务器飞贴站配置目录，修改 `config.pub.js` 和 `config.reader.js` 配置
+   ```powershell
+   $ sudo seaky.club/flying-pub/config
+   $ sudo vim config.pub.js        # title等标志性的内容修改为自己的。如“飞贴”改为“思齐”
+   $ sudo vim config.reader.js     # title等标志性的内容修改为自己的。如“飞贴”改为“思齐”
+   ```
+
+### 其他   
+关于学习 Linux，ssh，nginx，docker和docker-compose，可以通过在本体搭建虚拟机，安装Linux操作系统来进行练习，我用的是VirtualBox搭建的，操作系统用的是centos。   
+
+列一下我的学习链接：
+[Linux](http://www.beylze.com/linuxjiaocheng/)；
+[Linux](https://www.yuhelove.com/)；
+[docker](https://vuepress.mirror.docker-practice.com/image/list.html#%E9%95%9C%E5%83%8F%E4%BD%93%E7%A7%AF)；
+[docker_xue.cn](https://xue.cn/user/33739411@github/reader?bookId=24&path=book_31427/txt002.ipynb&redirects=1)；
+[docker](https://www.jianshu.com/p/9f76aa8740b0)；
+[docker](http://c.biancheng.net/view/3189.html)
+
+还有最重要的google搜索引擎
 
 ### 所感
+一个多月的高密度学习，基本掌握了建立一个webapp的知识和初步技能。过程中遇到很多问题也解决了很多问题，同时自我感觉成长的很多。
 
-完整的跟着做了一个应用，在实践中学习感受模型，视图+模板，路由控制各自功能，三者之间的关系，以及如何交互协作。对于web应用框架有了一个整体的理解。
+一点心得，遇到一个弄了很久也无法解决的问题的时候，放松一下洗个碗，重新从基础知识再读一遍教程，通常就会柳暗花明。
 
-
-
----
-
+---   
 **定投践行社区**里面有李俊老师的**Python编程课**，刘晓艳老师的**英文课**(正在讲的是《**beyond feelings**》)，廖智小姐姐的幸福力(**汶川地震30小时深埋地下的感悟**)，老虎证券王珊老师的**读财报课**，还有李笑来老师的**写作课**和**定投课**，**定投时间**超值体验如果你也想加入，注册 [**Mixin**](https://mixin.one/messenger) 加我(ID: **21120**)好友，送你邀请码。
 
 **注:** 践行社区是建立在 [**Mixin Massager**](https://mp.weixin.qq.com/s/ci_OWj9vtnsJ4OROifNfSQ) 上的社群，所以你必须学会使用 Mixin  Massager ；同时践行社区是封闭课程社区没有邀请码不能加入。)
