@@ -7,7 +7,7 @@
 要掌握下列知识领域的基本操作： **服务器与域名基本知识，Linux系统操作，ssh服务，TLS&CA，git，nginx，docker和docker-compose，数据库**
 
 **<飞贴站架构图>**
-![seakyclub](https://static.press.one/73/8e/738ec26af0d8069a1320beb4a64ad358f9af968415cd5064c43fd17cbe119992.png)
+![seakyclub](http://src.seaky.club/seakyclub.png)
 
 **<请求响应流程>**
 > 1. 用户通过浏览器输入域名
@@ -365,7 +365,7 @@
 1. https配置(选择Let's Encrypt作为认证平台，用certbot实现认证过程)    
    TLS协议&CA证书，简要实现过程如下图：过程是通过[非对称加密](https://reader.seaky.club/posts/71bbf6bd85beb9e08da2c65e66ba0001a9d990c747afa376d065a78bcb922275)实现的。  
 
-   ![TLS&CA](https://static.press.one/42/34/423420f2bee4bcb5441c274a0165479944b065e2933425ef621e9a3936436460.png)
+   ![TLS&CA](http://src.seaky.club/CA.png)
 
 
    `/etc/nginx/nginxconfig.io/ssl.conf;` ssl配置TLS认证相关

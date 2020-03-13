@@ -14,6 +14,8 @@ I will be very very glad.
 ---
 ## My learning summary.
 
+
+[Python summary-12 -- seaky.club](../../../summary12_seakyclub.md)   
 [Python summary-11 -- Django](https://press.one/files/de6f75d8b08b29411b8f5c6ad051bc4e87900f47fac7caabc9a9257924408920)    
 [Python summary-10 -- Protocol-2](https://press.one/files/8f3846123c2b2879565703800a37b7f60dd19e3ff7821c65c3d43adb5dfb9bca)  
 [Python summary-9 -- Protocol-1](https://press.one/files/3bbc71a8a923a30f72c4b2b710aef6a081378f05aa21c2901ab3ea73b5eddffb)    
