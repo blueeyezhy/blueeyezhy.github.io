@@ -37,7 +37,7 @@
    ![designer](https://static.press.one/92/54/925436045b9710510eb6d14d03c540d16ca1b741303b5feffbb5baa1b67a0f8f.jpg)
    
    为更好的理解控件，控件的布局，控件间结构关系，我没有使用 Qt Designer，而是直接通过代码的方式实现 UI 设计。下面是在实现过程中我所遇到的问题点，也是后续学习中需要注意的事项: 
-   1. 类只有实例化以后才能被布局：  
+    1. 类只有实例化以后才能被布局：  
         ```python
         v_4_2 = ["-", "+"]
         for i in v_4_2:
@@ -47,7 +47,7 @@
             b_tmp.setSizePolicy(size_policy)  #设置延展属性
             tab_1_widget_h4_2_layout.addWidget(b_tmp) #布局按钮
         ```
-    1. 自动布局分为横向布局 `QHBoxLayout()`，纵向布局 `QVBoxLayout()` 和栅格布局 `QGridLayout`，这些布局也都是类，也必须实例化以后才能对实例进行操作。还有一个重要的点是要清楚布局绑定在什么控件上，对那些控件进行布局。举例说明：
+    2. 自动布局分为横向布局 `QHBoxLayout()`，纵向布局 `QVBoxLayout()` 和栅格布局 `QGridLayout`，这些布局也都是类，也必须实例化以后才能对实例进行操作。还有一个重要的点是要清楚布局绑定在什么控件上，对那些控件进行布局。举例说明：
         ```python
         self.tab_2 = QWidget()  #实例化一个 QWidget() 对象，赋值给 self.tab_2
         self.tab_widget.addTab(self.tab_2, "function") #将对象 self.tab_2 绑定在self.tab_widget对象上，显示为 "function" 。
