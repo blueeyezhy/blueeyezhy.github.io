@@ -7,14 +7,14 @@
 要掌握下列知识领域的基本操作： **服务器与域名基本知识，Linux系统操作，ssh服务，TLS&CA，git，nginx，docker和docker-compose，数据库**
 
 **<飞贴站架构图>**
-![seakyclub](https://static.press.one/73/8e/738ec26af0d8069a1320beb4a64ad358f9af968415cd5064c43fd17cbe119992.png)
+![seakyclub](https://src.seaky.club/img/seakyclub.png)
 
 **<请求响应流程>**
 > 1. 用户通过浏览器输入域名
 > 2. 浏览器通过DNS域名解析，链接到服务器外网IP
 > 3. nginx监听端口80(http协议)和443(https协议)，并将所有80端口的请求全部转到443端口上(443端口是通过TLS完全认证的安全入口)
 > 4. nginx根据请求的域名($host)分发到对应的服务应用或资源
-> 5. 如果 $host = seaky.club, 则nginx转到首页资源目录，读取指定的静态资源(html,img,css,js等)经过nginx转发，返回给浏览器    
+> 5. 如果 $host = seaky.club, 则nginx转到首[[](https://src.seaky.club/img/CA.png)](https://src.seaky.club/img/CA.png)页资源目录，读取指定的静态资源(html,img,css,js等)经过nginx转发，返回给浏览器    
 > 6. 如果 $host = www.seaky.club, 则nginx将请求转到**docker0**的80端口，由**docker0**的80端口映射的docker容器响应该请求，然后把响应结果通过nginx转发给浏览器
 > 7. 如果 $host = pub.seaky.club, 则nginx将请求转到**br-飞贴**的8000端口，由**br-飞贴**的8000端口映射的pub容器响应该请求；pub容器根据请求中的路径和参数，通过**br-飞贴**连接到redis，PG数据库及异步队列，计算出响应结果；然后通过nginx将响应结果转发给浏览器
 > 8. 如果 $host = reader.seaky.club, 则nginx将请求转到**br-飞贴**的9000端口，由**br-飞贴**的9000端口映射的reader容器响应该请求；reader容器根据请求中的路径和参数，通过**br-飞贴**连接到redis，PG数据库及异步队列，计算出响应结果；然后通过nginx将响应结果转发给浏览器         
@@ -425,7 +425,7 @@
 4. https配置（选择Let's Encrypt作为认证平台，用certbot实现认证过程）    
    https安全链接是通过TLS协议和CA证书来实现的，简要实现过程如下图：过程核心是[非对称加密](https://reader.seaky.club/posts/71bbf6bd85beb9e08da2c65e66ba0001a9d990c747afa376d065a78bcb922275)。  
 
-   ![TLS&CA](https://static.press.one/42/34/423420f2bee4bcb5441c274a0165479944b065e2933425ef621e9a3936436460.png)
+   ![TLS&CA](https://src.seaky.club/img/CA.png)
 
 
    `/etc/nginx/nginxconfig.io/ssl.conf;` ssl配置TLS认证相关
