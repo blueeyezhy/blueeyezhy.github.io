@@ -1,10 +1,10 @@
-# 从零搭建飞贴站--复盘&学习总结(十二)
+# 从零搭建飞贴站--复盘&学习总结(十二)  
 
 ## 飞贴站框架&请求响应流程  
 先从整体介绍一个飞贴站的架构和请求响应流程，然后再一块一块的说明每一部分怎么实现。  
 
 **<建站前提条件>**  
-要掌握下列知识领域的基本操作： **服务器与域名基本知识，Linux系统操作，ssh服务，TLS&CA，git，nginx，docker和docker-compose，数据库**
+要掌握下列知识领域的基本操作： **服务器与域名基本知识，Linux系统操作(推荐使用 Ubuntu server)，ssh服务，TLS&CA，git，nginx，docker和docker-compose，数据库**
 
 **<飞贴站架构图>**
 ![seakyclub](https://src.seaky.club/img/seakyclub.png)
@@ -14,7 +14,7 @@
 > 2. 浏览器通过DNS域名解析，链接到服务器外网IP
 > 3. nginx监听端口80(http协议)和443(https协议)，并将所有80端口的请求全部转到443端口上(443端口是通过TLS完全认证的安全入口)
 > 4. nginx根据请求的域名($host)分发到对应的服务应用或资源
-> 5. 如果 $host = seaky.club, 则nginx转到首[[](https://src.seaky.club/img/CA.png)](https://src.seaky.club/img/CA.png)页资源目录，读取指定的静态资源(html,img,css,js等)经过nginx转发，返回给浏览器    
+> 5. 如果 $host = seaky.club, 则nginx转到首页资源目录，读取指定的静态资源(html,img,css,js等)经过nginx转发，返回给浏览器    
 > 6. 如果 $host = www.seaky.club, 则nginx将请求转到**docker0**的80端口，由**docker0**的80端口映射的docker容器响应该请求，然后把响应结果通过nginx转发给浏览器
 > 7. 如果 $host = pub.seaky.club, 则nginx将请求转到**br-飞贴**的8000端口，由**br-飞贴**的8000端口映射的pub容器响应该请求；pub容器根据请求中的路径和参数，通过**br-飞贴**连接到redis，PG数据库及异步队列，计算出响应结果；然后通过nginx将响应结果转发给浏览器
 > 8. 如果 $host = reader.seaky.club, 则nginx将请求转到**br-飞贴**的9000端口，由**br-飞贴**的9000端口映射的reader容器响应该请求；reader容器根据请求中的路径和参数，通过**br-飞贴**连接到redis，PG数据库及异步队列，计算出响应结果；然后通过nginx将响应结果转发给浏览器         
@@ -27,7 +27,7 @@
    阿里云，腾讯云，国外的云都可以。基于方便支付，成本及与云技术人员沟通方便我选择的是[阿里云](https://ecs-buy.aliyun.com/wizard?spm=5176.8709316.cart_detail_root.1.5f055f29pJNJgC&accounttraceid=7b505cab-c22e-4b9b-9f9d-39c15316dc2c&aly_as=aeEQM_-E#/prepay/cn-shenzhen)。  
    seaky.club当前的硬件配置(后期可以扩展)：2核CPU，4G内存，40G硬盘，带宽默认，最好选择支持ipv6。
 2. 选择操作系统   
-   这个看个人喜好，主流的是centos和ubuntu server。因为我前一段时间学习的是centos，所以我选的是centos8。
+   这个看个人喜好，主流的是centos和Ubuntu server(推荐)。centos配置的麻烦一些很多设置需要另外调整，Ubuntu server大部分默认就好。
 3. 选择分配公网IP，这是外网的入口，默认就好。
 4. 设定安全组，追加入站规则开放80，443端口的访问，出站默认(全部允许)。
 5. 创建并**保存**ssh密钥(*.pem，后面远程登陆要用)，**绑定服务器实例**(这一步很重要，不要漏掉)，修改root密码。
@@ -61,7 +61,7 @@
    **c.** 服务器的ssh服务监听22端口，接收到的信息后，利用其保存的公钥验证签名信息(解密)，校验用户和信息完整性；    
    **d.** 然后根据验证信息内容，将验证信息转发给对应的服务或操作系统指令集
 
-2. 使用上述工具登录远程服务器，创建普通权限用户，避免远程使用root用户造成误操作
+2. 使用上述工具登录远程服务器，创建普通权限用户，避免远程使用root用户造成误操作    
    ```powershell
    $ adduser www              # 新建用户
    $ passwd www               # 设置密码
@@ -81,7 +81,8 @@
    不要禁止远程root登录，因为后续执行飞贴的docker-compose命令时需要用root用户。
 
 4. 远程登录服务器，确认网络配置是否支持ipv6通讯功能。因为飞贴的服务是通过docker-compose创建的容器组实现的，而容器之间是通过TCP6协议进行通讯的，所以主网卡的配置需要支持ipv6，以支持TCP6协议的通讯。   
-   执行 `ifconfig` 或 `nmcli` 查看当前网络配置：
+   执行 `ifconfig` 或 `nmcli` 查看当前网络配置：    
+   **（注：Ubuntu server ipv6是默认支持的，只需要确认就好，不需要额外的配置）**
    ```powershell
    $ sudo nmcli
    eth0: connected to eth0
@@ -137,7 +138,8 @@
    ```
    `wq` 保存退出，`nmcli c reload` 生效网络配置。
 
-5. 查看系统防火墙配置，因为云安全组已经配置了入站规则，所以系统防火墙默认是关闭的，即使打开也不会增加多少安全度。如果想要开防火墙的话，需要进行如下操作：
+5. 查看系统防火墙配置，因为云安全组已经配置了入站规则，所以系统防火墙默认是关闭的，即使打开也不会增加多少安全度。如果想要开防火墙的话，需要进行如下操作：   
+   **（注：Ubuntu server 不需要这一步配置）**
    ```powershell
    $ sudo firewall-cmd --state        # 查看防火墙状态，显示 'not runing'
    $ sudo systemctl start firewalld   # 开启防火墙系统防火墙
@@ -173,25 +175,31 @@
    **c**.容器和系统公用一个网卡资源，通过命名空间隔离，如果网卡硬件设置不开放6379和5432端口的话，飞贴容器就访问不到数据库   
    **d**.因为云主机的入站规则仅开放了80和443端口，所有外部无法访问到6379和5432端口，可以保证数据库安全
 
-6. 系统升级安装包 
+6. 系统升级安装包 **（Ubuntu server 用 apt命令）**
    ```powershell
    $ sudo yum upgrade   # 升级yum安装包，没有用update是因为update会升级kernel内核，可能会引入不稳定因素
    $ sudo yum --version # 确认版本
    ``` 
 
-7. 安装配置git并确认版本
+7. 安装配置git并确认版本  **（Ubuntu server 用 apt命令）**
    ```powershell
    $ sudo yum install git  
    $ sudo git version   
    ```
 
-8. 安装配置 [docker](http://dockerdocs.gclearning.cn/install/linux/docker-ce/centos/)，[docker-compose](https://docs.docker.com/compose/install/)，并确认版本
+8. 安装配置 [docker](https://docs.docker.com/engine/install/ubuntu/)，[docker-compose](https://docs.docker.com/compose/install/)，并确认版本
    ```powershell
    $ sudo docker -v
    Docker version 19.03.6, build 369ce74a3c
    $ sudo docker-compose -v
    docker-compose version 1.25.4, build unknown
    ```
+   官网安装 docker-compose 很慢的话，可以通过 daocloud.io 加速站安装
+   ```powershell
+   sudo curl -L https://get.daocloud.io/docker/compose/releases/download/1.25.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+   sudo chmod +x /usr/local/bin/docker-compose # 授权
+   ```
+
 
 9. 安装 [flying-hub](https://github.com/Press-One/flying-pub)
    ```powershell
@@ -207,7 +215,7 @@
    参看 [mixinDeveloper](https://developers.mixin.one/guides)，生成应用mixin app的密钥`Secret`，下载`Session`获取`PIN`，`Session ID`，`PinToken`，`私钥`，session文件请妥善保管。   
    启动完成后，执行 `crul http://localhost:8000`，`crul http://localhost:9000` 确认返回发布站和阅读站的html首页。
 
-1. 安装nginx    
+1. 安装nginx **（Ubuntu server 用 apt命令）**
    ```powershell
    $ sudo yum install nginx -y   # 安装nginx
    $ nginx -v                    # 确认版本
@@ -230,6 +238,7 @@
       Mar 11 09:06:58 seakyrun systemd[1]: Starting The nginx HTTP and reverse proxy server...
    ```
    如果开了防火墙的话，需要添加设定：
+   **（注：Ubuntu server 不需要这一步配置）** 
    ```powershell
    $ sudo firewall-cmd --permanent --zone=public --add-service=http 
    $ sudo firewall-cmd --permanent --zone=public --add-service=https
@@ -321,7 +330,7 @@
    $ sudo systemctl status nginx    # 确认nginx状态
    ```
 
-3. 其他配置内容  nginx & general & security & proxy   
+1. 其他配置内容  nginx & general & security & proxy   
    `/etc/nginx/nginx.conf;` nginx主配置    
    ```powershell
    user nginx;
@@ -410,7 +419,7 @@
    proxy_hide_header       Server;
    proxy_set_header Upgrade                $http_upgrade;
    proxy_set_header Connection             "upgrade";
-   proxy_set_header Host                   $host;
+   proxy_set_header Host                   $http_host;
    proxy_set_header X-Real-IP              $remote_addr;
    proxy_set_header X-Forwarded-For        $proxy_add_x_forwarded_for;
    proxy_set_header X-Forwarded-Proto      https;
@@ -422,7 +431,7 @@
    ```
 
 
-4. https配置（选择Let's Encrypt作为认证平台，用certbot实现认证过程）    
+1. https配置（选择Let's Encrypt作为认证平台，用certbot实现认证过程）    
    https安全链接是通过TLS协议和CA证书来实现的，简要实现过程如下图：过程核心是[非对称加密](https://reader.seaky.club/posts/71bbf6bd85beb9e08da2c65e66ba0001a9d990c747afa376d065a78bcb922275)。  
 
    ![TLS&CA](https://src.seaky.club/img/CA.png)
