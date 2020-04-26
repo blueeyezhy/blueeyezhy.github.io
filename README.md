@@ -14,6 +14,8 @@ I will be very very glad.
 ---
 ## My learning summary.
 
+
+[VirtualBox+Ubuntu+ssh](https://reader.seaky.club/posts/0eb1a98010597012e2c339139163baf8be08cc71c66e831c48e3f83ddd8c0b3d)   
 [about-learning-Python](https://reader.seaky.club/posts/ed8f6a3e824321251533791019eb8e1d7d8f71e234874b58e39d867c837f13d7)   
 [Python summary-12 -- seaky.club](https://press.one/files/73c24e023e01bf581fae39b060ac3a0ce7c8e625b97a9f52fbada345b51d23d8)   
 [Python summary-11 -- Django](https://press.one/files/de6f75d8b08b29411b8f5c6ad051bc4e87900f47fac7caabc9a9257924408920)    
