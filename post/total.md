@@ -14,6 +14,7 @@ I will be very very glad.
 ---
 ## My learning summary.
 
+[Python-CFA-return&risk](https://reader.seaky.club/posts/6646ad6a4eb49952d4a340244a06c89e731aa0d1f0086084be4a103b42d4a132)   
 [Python-use-in-CFA](https://reader.seaky.club/posts/c246d06aad9af3e92ab1717639521c0cbc16eba1f2888fdae684f8f7b27786c9)    
 [VirtualBox+Ubuntu+ssh](https://reader.seaky.club/posts/0eb1a98010597012e2c339139163baf8be08cc71c66e831c48e3f83ddd8c0b3d)   
 [about-learning-Python](https://reader.seaky.club/posts/ed8f6a3e824321251533791019eb8e1d7d8f71e234874b58e39d867c837f13d7)   
