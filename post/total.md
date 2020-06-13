@@ -10,10 +10,10 @@ I have created my first desktop program, it's a [**`calculator`**](https://githu
 Please feel free to inform me about this little tool.
 I will be very very glad.
 
-
 ---
 ## My learning summary.
 
+[Python summary-13 -- auto-trade](https://reader.seaky.club/posts/34f5caa50a0d9b0808218d2135354d7cabe1d55cbda187e63ad0d597c1ca4879)   
 [Python-CFA-2portfolio](https://reader.seaky.club/posts/1d006cf687dd28f30d36a5f62d586dbd07a595bad3623f22f7f6d2f7ae91a5bf)      
 [Python-CFA-return&risk](https://reader.seaky.club/posts/6646ad6a4eb49952d4a340244a06c89e731aa0d1f0086084be4a103b42d4a132)   
 [Python-use-in-CFA](https://reader.seaky.club/posts/c246d06aad9af3e92ab1717639521c0cbc16eba1f2888fdae684f8f7b27786c9)    
@@ -31,7 +31,6 @@ I will be very very glad.
 [Python summary-3 -- PyQt5](https://press.one/files/b144e92ec716bf268ca4eb1124a78a11d12fa19f8b2f627e452843c37366d472)  
 [Python summary-2 -- PowerShell](https://press.one/files/322f2647c0bb7f85f214c109a35bd3ce744b6710083e64e1b38e19de107076e5)  
 [Python summary-1](https://press.one/files/4c7f8014a7c4d8a3bdeb04207171c096b59d27765458429129bd07a060dee68a)
-
 
 ---
 [My PressOne Signature](https://press.one/p/v?s=6ad6904f049eb87bd922e0f227b4c7d1cb23b3f007cae923e3f28cfd06948b37431a7d6c2235a5ed5da743162a47802bf7da163d904ebe949f3d2e63d299f6dd01&h=7024eeac5b6eb0db1886f5fb4e63ae6bcbc10816e4e8e5bce4e297584fe2f112&a=7c08521960497a61baf3f1c9760ff2a4cc66be1c&f=P1&v=3)

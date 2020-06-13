@@ -5,16 +5,19 @@
 
 假设我们有两个资产A、B，他们的统计收益率和风险分别是：$r_{A}$，$\sigma_{A}$ 与 $r_{B}$，$\sigma_{B}$；它们在初始投资总额中的比例分别是 $weight_{A}$ 和 $weight_{B}$；所以有 $weight_{A}+weight_{B}=1$。
 
-**相关系数 $\rho_{AB}$** 是资产A、B收益率相关性的标准化指标。$\rho_{AB}=\frac{Cov_{AB}}{\sigma_{A}\times\sigma_{B}}$：A与B收益率的协方差 $Cov_{AB}$ ，除以A与B各自标准差（风险）的积$\sigma_{A}\times\sigma_{B}$。 $\rho_{AB}$ 的取值范围是 $[-1~1]$ ：    
+**相关系数 $\rho_{AB}$** 是资产A、B收益率相关性的标准化指标。$\rho_{AB}=\frac{Cov_{AB}}{\sigma_{A}\times\sigma_{B}}$
 
-$\rho_{AB} =
+：A与B收益率的协方差  $Cov_{AB}$ ，除以A与B各自标准差（风险）的积$\sigma_{A}\times\sigma_{B}$。 $\rho_{AB}$ 的取值范围是 $[-1~1]$ ：    
+
+$$\rho_{AB} =
 \begin{cases}
 1: & \mbox{A、B  的收益率完全正相关} \\
 (0~1): & \mbox{A、B  的收益率正相关程度为  } \rho_{AB} \\
 0: & \mbox{A、B  的收益率完全不相关} \\
 (-1~0): & \mbox{A、B  的收益率正相关程度为  } \rho_{AB} \\
 -1: & \mbox{A、B  的收益率完全负相关} \\
-\end{cases}$
+\end{cases}$$
+
 
 
 那么，资产A、B组合的收益率 $r$ 和风险 $\sigma$ 分别是：  
@@ -163,7 +166,7 @@ portfolio2(rA, rB, sA, sB, weightA, rho)
     :rtype: float
 ```
 
----   
+---
 **定投践行社区**里面有李俊老师的**Python编程课**，刘晓艳老师的**英文课**(正在讲的是《**beyond feelings**》)，廖智小姐姐的幸福力(**汶川地震30小时深埋地下的感悟**)，老虎证券王珊老师的**读财报课**，还有李笑来老师的**写作课**和**定投课**，**定投时间**超值体验如果你也想加入，下载并注册 [**Mixin**](https://mixin.one/messenger) 加我(ID: **21120**)好友，送你邀请码。
 
 **注:** 践行社区是建立在 [**Mixin Massager**](https://mixin.one/messenger) 上的社群，所以你必须学会使用 Mixin  Massager ；同时践行社区是封闭课程社区没有邀请码不能加入。)
