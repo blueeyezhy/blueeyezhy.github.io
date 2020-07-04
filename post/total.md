@@ -12,7 +12,7 @@ I will be very very glad.
 
 ---
 ## My learning summary.
-
+[Python summary-14 -- concurrency](https://reader.seaky.club/posts/b115fa950049613e5ca8a9b180801ce0f88835cb50b84b7f22d64afcc07bbad0)   
 [Python summary-13 -- auto-trade](https://reader.seaky.club/posts/34f5caa50a0d9b0808218d2135354d7cabe1d55cbda187e63ad0d597c1ca4879)   
 [Python-CFA-2portfolio](https://reader.seaky.club/posts/1d006cf687dd28f30d36a5f62d586dbd07a595bad3623f22f7f6d2f7ae91a5bf)      
 [Python-CFA-return&risk](https://reader.seaky.club/posts/6646ad6a4eb49952d4a340244a06c89e731aa0d1f0086084be4a103b42d4a132)   
